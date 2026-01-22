@@ -20,7 +20,7 @@ export default function CartSidebar({ lang }) {
   const { items, total, isEmpty, resetCart } = useCart();
   const { price: cartTotal } = usePrice({
     amount: total,
-    currencyCode: 'USD',
+    currencyCode: 'BDT',
   });
 
   return (

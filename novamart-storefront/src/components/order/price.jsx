@@ -6,7 +6,7 @@ export const TotalPrice = ({ items }) => {
     amount: items?.total ?? Math.round(
       calculateTotal(items?.products) + (items?.delivery_fee ?? 0) - (items?.discount ?? 0),
     ),
-    currencyCode: 'USD',
+    currencyCode: 'BDT',
   });
   return <span className="total_price">{price}</span>;
 };
@@ -14,7 +14,7 @@ export const TotalPrice = ({ items }) => {
 export const DiscountPrice = (discount) => {
   const { price } = usePrice({
     amount: discount?.discount,
-    currencyCode: 'USD',
+    currencyCode: 'BDT',
   });
   return <>-{price}</>;
 };
@@ -22,7 +22,7 @@ export const DiscountPrice = (discount) => {
 export const DeliveryFee = (delivery) => {
   const { price } = usePrice({
     amount: delivery?.delivery,
-    currencyCode: 'USD',
+    currencyCode: 'BDT',
   });
   return <>{price}</>;
 };
@@ -30,7 +30,7 @@ export const DeliveryFee = (delivery) => {
 export const SubTotalPrice = ({ items }) => {
   const { price } = usePrice({
     amount: calculateTotal(items),
-    currencyCode: 'USD',
+    currencyCode: 'BDT',
   });
   return <>{price}</>;
 };

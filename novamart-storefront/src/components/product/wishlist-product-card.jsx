@@ -6,21 +6,35 @@ import usePrice from '@framework/product/use-price';
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
 import { useTranslation } from 'src/app/i18n/client';
 
+import { useWishlistMutation } from '@framework/product/use-wishlist-mutation';
+
 const WishlistProductCard = ({
   product,
   className,
   lang,
 }) => {
   const { t } = useTranslation(lang, 'common');
-  const { name, image, unit } = product ?? {};
+  const { name, image, unit } = product?.product ?? {};
   const placeholderImage = `/assets/placeholder/product.svg`;
-  const [favorite, setFavorite] = useState(false);
+  const [favorite, setFavorite] = useState(true);
+  const { mutate: toggleWishlist, isPending: isToggling } = useWishlistMutation();
 
   const { price, basePrice, discount } = usePrice({
-    amount: product?.sale_price ? product.sale_price : product?.price,
-    baseAmount: product?.price,
-    currencyCode: 'USD',
+    amount: product?.product?.sale_price ? product.product.sale_price : product?.product?.price,
+    baseAmount: product?.product?.price,
+    currencyCode: 'BDT',
   });
+
+  function handleWishlist() {
+    toggleWishlist(
+      { product_id: product?.product?._id }, // Pass product ID
+      {
+        onSuccess: (data) => {
+          setFavorite(data.active);
+        },
+      }
+    );
+  }
 
   return (
     <div className="flex flex-col py-4 border-b md:flex-row border-border-base 2xl:py-5 wishlist-card last:pb-0 first:-mt-8 lg:first:-mt-4 2xl:first:-mt-7">
@@ -58,9 +72,7 @@ const WishlistProductCard = ({
       </div>
       <div
         className="flex cursor-pointer ltr:ml-auto rtl:mr-auto md:pt-7"
-        onClick={() => {
-          setFavorite(!favorite);
-        }}
+        onClick={handleWishlist}
       >
         {favorite ? (
           <>

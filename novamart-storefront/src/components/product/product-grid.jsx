@@ -1,4 +1,4 @@
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import Alert from '@components/ui/alert';
 import Button from '@components/ui/button';
 import ProductCardAlpine from '@components/product/product-cards/product-card-alpine';
@@ -7,16 +7,13 @@ import cn from 'classnames';
 import { useProductsQuery } from '@framework/product/get-all-products';
 import { LIMITS } from '@framework/utils/limits';
 import { useTranslation } from 'src/app/i18n/client';
-import useQueryParam from '@utils/use-query-params';
 
 export const ProductGrid = ({ className = '', lang }) => {
   const { t } = useTranslation(lang, 'common');
   const pathname = usePathname();
-  const { getParams, query } = useQueryParam(pathname ?? '/');
-  
-  const newQuery = getParams(
-    `${process.env.NEXT_PUBLIC_WEBSITE_URL}${query}`,
-  );
+  const searchParams = useSearchParams();
+  const queryString = searchParams.toString();
+  const newQuery = queryString ? `?${queryString}` : '';
 
   const {
     isFetching: isLoading,

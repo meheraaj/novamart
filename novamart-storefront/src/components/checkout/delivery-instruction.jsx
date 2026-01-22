@@ -2,31 +2,37 @@ import TextArea from '@components/ui/form/text-area';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'src/app/i18n/client';
 import Text from '@components/ui/text';
+import { useAtom } from 'jotai';
+import { checkoutAtom } from '@contexts/checkout.atom';
+import { useEffect } from 'react';
 
 const DeliveryInstructions = ({
     data,
     lang,
 }) => {
     const { t } = useTranslation(lang);
+    const [checkout, setCheckout] = useAtom(checkoutAtom);
     const {
         register,
-        handleSubmit,
+        watch,
         formState: { errors },
     } = useForm({
         defaultValues: {
-            instructionNote: data || '',
+            instructionNote: checkout?.deliveryNote || data || '',
             default: data || false,
         },
     });
 
-    function onSubmit(values) {
-        console.log(values, 'Delivery Note');
-    }
+    const instructionNote = watch('instructionNote');
+
+    useEffect(() => {
+        setCheckout((prev) => ({ ...prev, deliveryNote: instructionNote }));
+    }, [instructionNote, setCheckout]);
 
     return (
         <div className="w-full">
             <div className="w-full mx-auto">
-                <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                <form noValidate>
                     <div className="mb-6">
                         <TextArea
                             variant="normal"
@@ -35,23 +41,6 @@ const DeliveryInstructions = ({
                             {...register('instructionNote')}
                             lang={lang}
                         />
-                    </div>
-                    <div className="mb-6">
-                        <input
-                            id="default-type"
-                            type="checkbox"
-                            className="w-5 h-5 transition duration-500 ease-in-out border border-gray-300 rounded cursor-pointer form-checkbox focus:ring-offset-0 hover:border-heading focus:outline-none focus:ring-0 focus-visible:outline-none focus:checked:bg-brand hover:checked:bg-brand checked:bg-brand"
-                            {...register('default', { required: 'Confirm the policy' })}
-                        />
-                        <label
-                            htmlFor="default-type"
-                            className="font-medium align-middle ltr:ml-3 rtl:mr-3 text-brand-dark text-15px"
-                        >
-                            {t('forms:label-leave-at-my-door')}
-                        </label>
-                        <Text className="ltr:ml-8 rtl:mr-8 pt-2.5" variant="small">
-                            {t('common:text-selecting-this-option')}
-                        </Text>
                     </div>
                 </form>
             </div>

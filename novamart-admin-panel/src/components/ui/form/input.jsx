@@ -4,7 +4,7 @@ import React from 'react';
 const classes = {
     root: 'py-2 px-4 w-full appearance-none transition duration-150 ease-in-out border text-input text-13px lg:text-sm font-body rounded placeholder-[#B3B3B3] min-h-12 transition duration-200 ease-in-out text-brand-dark focus:ring-0',
     normal:
-        'bg-gray-100 border-gray-300 focus:shadow focus:text-brand-light focus:border-brand',
+        'bg-gray-100 border-gray-300 focus:shadow focus:text-brand-dark focus:border-brand',
     solid:
         'text-brand-dark border-border-two focus:border-2 focus:outline-none focus:border-brand h-11 md:h-12',
     outline: 'border-gray-300 focus:border-brand',

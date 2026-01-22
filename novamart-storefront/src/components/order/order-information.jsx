@@ -14,13 +14,13 @@ export default function OrderInformation({ lang }) {
   const id = (idParam && idParam !== 'null' && idParam !== 'undefined') ? idParam : null;
 
   const { data, isLoading, isError, error } = useOrderQuery(id, {
-    enabled: !!id, // Only fetch if ID is present and valid
+    enabled: !!id,
   });
 
   const { price: total } = usePrice(
     data && {
       amount: data.shipping_fee ? data.total + data.shipping_fee : data.total,
-      currencyCode: 'USD',
+      currencyCode: 'BDT',
     }
   );
 
@@ -40,13 +40,37 @@ export default function OrderInformation({ lang }) {
     );
   }
 
+  const statusName = data?.status?.name || data?.status || 'Pending';
+  
+  const getStatusColor = (status) => {
+    switch (status?.toLowerCase()) {
+      case 'pending': return 'text-yellow-600';
+      case 'processing': return 'text-blue-600';
+      case 'shipped': return 'text-purple-600';
+      case 'delivered': return 'text-green-600';
+      case 'cancelled': return 'text-red-600';
+      default: return 'text-brand-dark';
+    }
+  };
+
+  const getStatusMessage = (status) => {
+    switch (status?.toLowerCase()) {
+      case 'pending': return t('text-order-received');
+      case 'processing': return 'Your order is being processed.';
+      case 'shipped': return 'Your order is on the way.';
+      case 'delivered': return 'Your order has been delivered.';
+      case 'cancelled': return 'Your order has been cancelled.';
+      default: return t('text-order-received');
+    }
+  };
+
   return (
     <div className="py-16 xl:px-32 2xl:px-44 3xl:px-56 lg:py-20">
       <div className="flex items-center justify-start px-4 py-4 mb-6 text-sm border rounded-md border-border-base bg-fill-secondary lg:px-5 text-brand-dark md:text-base lg:mb-8">
         <span className="flex items-center justify-center w-10 h-10 rounded-full ltr:mr-3 rtl:ml-3 lg:ltr:mr-4 lg:rtl:ml-4 bg-brand bg-opacity-20 shrink-0">
           <IoCheckmarkCircle className="w-5 h-5 text-brand" />
         </span>
-        {t('text-order-received')}
+        {getStatusMessage(statusName)}
       </div>
 
       <ul className="flex flex-col border rounded-md border-border-base bg-fill-secondary md:flex-row mb-7 lg:mb-8 xl:mb-10">
@@ -79,6 +103,14 @@ export default function OrderInformation({ lang }) {
             {t('text-payment-method')}:
           </span>
           {data?.payment_gateway || 'Cash on Delivery'}
+        </li>
+        <li className="px-4 py-4 text-base font-semibold border-b border-gray-300 border-dashed text-brand-dark lg:text-lg md:border-b-0 md:border-r lg:px-6 xl:px-8 md:py-5 lg:py-6 last:border-0">
+          <span className="uppercase text-[11px] block text-brand-muted font-normal leading-5">
+            Status:
+          </span>
+          <span className={getStatusColor(statusName)}>
+            {statusName}
+          </span>
         </li>
       </ul>
 

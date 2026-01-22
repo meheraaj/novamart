@@ -19,7 +19,7 @@ export default function Cart({ lang }) {
   const { items, total, isEmpty, resetCart } = useCart();
   const { price: cartTotal } = usePrice({
     amount: total,
-    currencyCode: 'USD',
+    currencyCode: 'BDT',
   });
 
   return (

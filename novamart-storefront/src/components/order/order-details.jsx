@@ -4,11 +4,13 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import Heading from '@components/ui/heading';
 import { useTranslation } from 'src/app/i18n/client';
+import Image from '@components/ui/image';
+import { productPlaceholder } from '@assets/placeholders';
 
 const OrderItemCard = ({ product }) => {
   const { price: itemTotal } = usePrice({
     amount: product.price * product.quantity,
-    currencyCode: 'USD',
+    currencyCode: 'BDT',
   });
   
   return (
@@ -17,7 +19,20 @@ const OrderItemCard = ({ product }) => {
       key={product.id}
     >
       <td className="p-4">
-        {product.name} * {product.quantity}
+        <div className="flex items-center gap-3">
+          <div className="relative w-16 h-16 shrink-0 overflow-hidden rounded-md border border-border-base">
+            <Image
+              src={product.image?.thumbnail || product.image || productPlaceholder}
+              alt={product.name}
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-brand-dark font-medium">{product.name}</span>
+            <span className="text-xs text-brand-muted">Qty: {product.quantity}</span>
+          </div>
+        </div>
       </td>
       <td className="p-4">{itemTotal}</td>
     </tr>
@@ -47,7 +62,7 @@ const OrderDetails = ({
   const { price: subtotal } = usePrice(
     order && {
       amount: order.total,
-      currencyCode: 'USD',
+      currencyCode: 'BDT',
     }
   );
 
@@ -56,14 +71,14 @@ const OrderDetails = ({
       amount: order.shipping_fee
         ? order.total + order.shipping_fee
         : order.total,
-      currencyCode: 'USD',
+      currencyCode: 'BDT',
     }
   );
 
   const { price: shipping } = usePrice(
     order && {
       amount: order.shipping_fee,
-      currencyCode: 'USD',
+      currencyCode: 'BDT',
     }
   );
 

@@ -38,16 +38,6 @@ const accountMenu = [
         icon: <NotificationIcon className="w-5 md:w-[22px] h-5 md:h-[22px]" />,
     },
     {
-        slug: ROUTES.LEGAL_NOTICE,
-        name: 'text-account-details-notice',
-        icon: <NoticeIcon className="w-5 md:w-[22px] h-5 md:h-[22px]" />,
-    },
-    {
-        slug: ROUTES.HELP_CENTER,
-        name: 'text-account-details-help',
-        icon: <HelpIcon className="w-5 md:w-[22px] h-5 md:h-[22px]" />,
-    },
-    {
         slug: ROUTES.CHANGE_PASSWORD,
         name: 'text-change-password',
         icon: (

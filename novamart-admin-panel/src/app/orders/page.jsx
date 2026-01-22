@@ -53,7 +53,7 @@ export default function OrdersPage() {
                                 <td className="p-4 text-brand-muted">
                                     {new Date(order.createdAt).toLocaleDateString()}
                                 </td>
-                                <td className="p-4 text-brand-muted">${order.total}</td>
+                                <td className="p-4 text-brand-muted">৳{order.total}</td>
                                 <td className="p-4">
                                     <span
                                         className={`px-2 py-1 rounded text-xs font-semibold ${order.status?.name === 'Delivered'

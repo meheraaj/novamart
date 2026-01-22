@@ -44,6 +44,10 @@ app.use((req, res, next) => {
   next();
 });
 
+// Serve static files
+app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
+
+
 // Dynamic Model Registration
 const registerDynamicModels = () => {
   // Use the same path as seed.js to ensure consistency

@@ -5,13 +5,14 @@ import { useCart } from '@contexts/cart/cart.context';
 import usePrice from '@framework/product/use-price';
 import { ROUTES } from '@utils/routes';
 import Counter from '@components/ui/counter';
+import { productPlaceholder } from '@assets/placeholders';
 
 const CartItem = ({ lang, item }) => {
   const { isInStock, addItemToCart, removeItemFromCart, clearItemFromCart } =
     useCart();
   const { price: totalPrice } = usePrice({
     amount: item?.itemTotal,
-    currencyCode: 'USD',
+    currencyCode: 'BDT',
   });
   const outOfStock = !isInStock(item.id);
 
@@ -22,16 +23,16 @@ const CartItem = ({ lang, item }) => {
     >
       <div className="relative flex rounded overflow-hidden shrink-0 cursor-pointer w-[90px] md:w-[100px] h-[90px] md:h-[100px]">
         <Image
-          src={item?.image?.thumbnail ?? item?.image ?? '/assets/placeholder/cart-item.svg'}
+          src={item?.image?.thumbnail || item?.image || productPlaceholder}
           width={100}
           height={100}
           loading="eager"
           alt={item.name || 'Product Image'}
           style={{ width: 'auto' }}
-          className="object-cover bg-fill-thumbnail"
+          className="object-cover"
         />
         <div
-          className="absolute top-0 flex items-center justify-center w-full h-full transition duration-200 ease-in-out bg-black ltr:left-0 rtl:right-0 bg-opacity-30 md:bg-opacity-0 md:group-hover:bg-opacity-30"
+          className="absolute top-0 flex items-center justify-center w-full h-full transition duration-200 ease-in-out bg-black/30 ltr:left-0 rtl:right-0 md:bg-transparent md:group-hover:bg-black/30"
           onClick={() => clearItemFromCart(item.id)}
           role="button"
         >

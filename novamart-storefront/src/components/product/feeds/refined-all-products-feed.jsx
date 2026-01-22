@@ -9,9 +9,8 @@ import { useModalAction } from '@components/common/modal/modal.context';
 import Alert from '@components/ui/alert';
 import cn from 'classnames';
 import { useTranslation } from 'src/app/i18n/client';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { LIMITS } from '@framework/utils/limits';
-import useQueryParam from '@utils/use-query-params';
 
 const RefinedAllProductFeed = ({
   lang,
@@ -19,11 +18,9 @@ const RefinedAllProductFeed = ({
 }) => {
   const { t } = useTranslation(lang, 'common');
   const pathname = usePathname();
-  const { getParams, query } = useQueryParam(pathname ?? '/');
-  
-  const newQuery = getParams(
-    `${process.env.NEXT_PUBLIC_WEBSITE_URL}${query}`,
-  );
+  const searchParams = useSearchParams();
+  const queryString = searchParams.toString();
+  const newQuery = queryString ? `?${queryString}` : '';
 
   const {
     isFetching: isLoading,

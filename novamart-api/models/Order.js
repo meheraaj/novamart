@@ -19,7 +19,9 @@ const orderSchema = new mongoose.Schema({
   delivery_time: String,
   created_at: String, // Keeping as string to match JSON format, or could convert to Date
   products: [mongoose.Schema.Types.Mixed], // Snapshot of products in order
-  shipping_address: mongoose.Schema.Types.Mixed
+  shipping_address: mongoose.Schema.Types.Mixed,
+  contact_number: String,
+  delivery_note: String
 }, { timestamps: true });
 
 module.exports = mongoose.model('Order', orderSchema);

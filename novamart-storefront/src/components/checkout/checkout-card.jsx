@@ -32,12 +32,12 @@ const CheckoutCard = ({ lang }) => {
     const { items, total, isEmpty } = useCart();
     const { price: subtotal } = usePrice({
         amount: total,
-        currencyCode: 'USD',
+        currencyCode: 'BDT',
     });
 
     function orderHeader() {
         if (isEmpty) return;
-        
+
         const orderInput = {
             products: items.map(item => ({
                 product_id: item.id,
@@ -49,7 +49,8 @@ const CheckoutCard = ({ lang }) => {
             total: total,
             status: { name: 'Pending', color: 'yellow' },
             shipping_address: checkoutState.shippingAddress,
-            // Add other fields if needed from checkoutState
+            contact_number: checkoutState.contactNumber,
+            delivery_note: checkoutState.deliveryNote,
         };
 
         createOrder(orderInput, {
@@ -75,7 +76,7 @@ const CheckoutCard = ({ lang }) => {
         {
             id: 2,
             name: t('text-shipping'),
-            price: '$0',
+            price: '৳0',
         },
         {
             id: 3,
@@ -153,3 +154,4 @@ const CheckoutCard = ({ lang }) => {
 };
 
 export default CheckoutCard;
+

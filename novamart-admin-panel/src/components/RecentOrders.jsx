@@ -34,7 +34,7 @@ export default function RecentOrders({ orders = [] }) {
                                         {order.status?.name}
                                     </span>
                                 </td>
-                                <td className="px-6 py-4 text-brand-dark font-medium">${order.total}</td>
+                                <td className="px-6 py-4 text-brand-dark font-medium">৳{order.total}</td>
                             </tr>
                         ))}
                     </tbody>

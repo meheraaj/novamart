@@ -54,21 +54,32 @@ export default function OrderDetailsPage() {
                             {order.products?.map((product, index) => (
                                 <div key={index} className="flex items-center justify-between border-b border-border-base pb-4 last:border-0 last:pb-0">
                                     <div className="flex items-center space-x-4">
-                                        {product.image?.thumbnail && (
-                                            <img src={product.image.thumbnail} alt={product.name} className="w-16 h-16 object-cover rounded" />
-                                        )}
+                                        <img 
+                                            src={
+                                                typeof product.image === 'string' ? product.image :
+                                                product.image?.thumbnail ? product.image.thumbnail :
+                                                product.image?.original ? product.image.original :
+                                                '/assets/placeholder/products/product-list.svg' // Fallback
+                                            } 
+                                            alt={product.name} 
+                                            className="w-16 h-16 object-cover rounded bg-gray-100"
+                                            onError={(e) => {
+                                                e.target.onerror = null;
+                                                e.target.src = '/assets/placeholder/products/product-list.svg';
+                                            }}
+                                        />
                                         <div>
                                             <p className="font-medium text-brand-dark">{product.name}</p>
                                             <p className="text-sm text-brand-muted">Qty: {product.quantity}</p>
                                         </div>
                                     </div>
-                                    <p className="font-medium text-brand-dark">${product.price * product.quantity}</p>
+                                    <p className="font-medium text-brand-dark">৳{product.price * product.quantity}</p>
                                 </div>
                             ))}
                         </div>
                         <div className="mt-4 pt-4 border-t border-border-base flex justify-between items-center">
                             <span className="font-bold text-lg">Total</span>
-                            <span className="font-bold text-xl text-brand">${order.total}</span>
+                            <span className="font-bold text-xl text-brand">৳{order.total}</span>
                         </div>
                     </div>
                 </div>
@@ -79,6 +90,15 @@ export default function OrderDetailsPage() {
                         <h3 className="text-xl font-semibold mb-4 text-brand-dark">Customer</h3>
                         <p className="text-brand-muted"><span className="font-medium text-brand-dark">Name:</span> {order.user?.name}</p>
                         <p className="text-brand-muted"><span className="font-medium text-brand-dark">Email:</span> {order.user?.email}</p>
+                        {order.contact_number && (
+                            <p className="text-brand-muted"><span className="font-medium text-brand-dark">Phone:</span> {order.contact_number}</p>
+                        )}
+                        {order.delivery_note && (
+                            <div className="mt-4 pt-4 border-t border-border-base">
+                                <h4 className="font-medium text-brand-dark mb-1">Delivery Note:</h4>
+                                <p className="text-brand-muted text-sm bg-gray-50 p-2 rounded border border-border-base">{order.delivery_note}</p>
+                            </div>
+                        )}
                     </div>
 
                     <div className="bg-white p-6 rounded-lg shadow-card border border-border-base">

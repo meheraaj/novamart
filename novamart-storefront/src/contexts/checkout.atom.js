@@ -5,4 +5,5 @@ export const checkoutAtom = atom({
   billingAddress: null,
   deliverySchedule: null,
   contactNumber: null,
+  deliveryNote: null,
 });

@@ -4,7 +4,7 @@ import Image from '@components/ui/image';
 export const OrderDetailsContent = ({ item }) => {
   const { price } = usePrice({
     amount: item.price,
-    currencyCode: 'USD',
+    currencyCode: 'BDT',
   });
 
   return (

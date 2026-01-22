@@ -20,9 +20,13 @@ export default function ProductFormPage() {
         price: 0,
         quantity: 0,
         description: '',
-        image: '', // Added image field
         categories: [], // Array of category IDs
     });
+
+    // Separate state for files
+    const [imageMain, setImageMain] = useState(null);
+    const [imageGallery1, setImageGallery1] = useState(null);
+    const [imageGallery2, setImageGallery2] = useState(null);
 
     const [categories, setCategories] = useState([]);
     const [showCategoryModal, setShowCategoryModal] = useState(false);
@@ -58,9 +62,10 @@ export default function ProductFormPage() {
                     price: data.price,
                     quantity: data.quantity,
                     description: data.description || '',
-                    image: data.image?.thumbnail || data.image || '', // Handle nested or flat image structure
                     categories: data.categories ? data.categories.map((c) => c._id || c) : [],
                 });
+                // Note: We don't pre-fill file inputs for security reasons, 
+                // but we could show existing images if we wanted to improve UI.
             }
         } catch (error) {
             console.error('Error fetching product:', error);
@@ -75,8 +80,34 @@ export default function ProductFormPage() {
 
         const method = isEdit ? 'put' : 'post';
 
+        // Create FormData
+        const data = new FormData();
+        data.append('id', formData.id);
+        data.append('name', formData.name);
+        data.append('slug', formData.slug);
+        data.append('price', formData.price);
+        data.append('quantity', formData.quantity);
+        data.append('description', formData.description);
+        
+        // Append categories individually or as JSON string if backend expects it
+        // Since backend uses req.body which is parsed by multer, simple fields are available.
+        // But arrays in FormData can be tricky. Express/Multer handles repeated keys as array.
+        formData.categories.forEach(cat => data.append('categories[]', cat));
+
+        if (imageMain) data.append('image_main', imageMain);
+        if (imageGallery1) data.append('image_gallery_1', imageGallery1);
+        if (imageGallery2) data.append('image_gallery_2', imageGallery2);
+
         try {
-            const res = await http[method](url, formData);
+            // Need to set content-type header to undefined so browser sets it with boundary
+            // But our http lib might set application/json by default.
+            // Let's assume http lib handles it or we use fetch directly if needed.
+            // If http lib is axios wrapper:
+            const res = await http[method](url, data, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
 
             if (res.status === 200 || res.status === 201) {
                 router.push('/products');
@@ -138,13 +169,40 @@ export default function ProductFormPage() {
                     required
                 />
 
-                <Input
-                    label="Image URL"
-                    name="image"
-                    value={formData.image}
-                    onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                    placeholder="https://example.com/image.jpg"
-                />
+                {/* Image Uploads */}
+                <div className="space-y-3 border p-4 rounded bg-gray-50">
+                    <h3 className="font-semibold text-brand-dark">Images</h3>
+                    
+                    <div>
+                        <label className="block text-sm font-medium text-brand-dark text-opacity-70 mb-1">Main Image</label>
+                        <input 
+                            type="file" 
+                            accept="image/*"
+                            onChange={(e) => setImageMain(e.target.files[0])}
+                            className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-light file:text-brand hover:file:bg-brand-light/80"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-brand-dark text-opacity-70 mb-1">Gallery Image 1</label>
+                        <input 
+                            type="file" 
+                            accept="image/*"
+                            onChange={(e) => setImageGallery1(e.target.files[0])}
+                            className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-light file:text-brand hover:file:bg-brand-light/80"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-brand-dark text-opacity-70 mb-1">Gallery Image 2</label>
+                        <input 
+                            type="file" 
+                            accept="image/*"
+                            onChange={(e) => setImageGallery2(e.target.files[0])}
+                            className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-light file:text-brand hover:file:bg-brand-light/80"
+                        />
+                    </div>
+                </div>
 
                 <div className="grid grid-cols-2 gap-4">
                     <Input
@@ -175,7 +233,7 @@ export default function ProductFormPage() {
                                 const selected = Array.from(e.target.selectedOptions, option => option.value);
                                 setFormData({ ...formData, categories: selected });
                             }}
-                            className="py-2 px-4 w-full appearance-none transition duration-150 ease-in-out border text-input text-13px lg:text-sm font-body rounded placeholder-[#B3B3B3] min-h-12 transition duration-200 ease-in-out text-brand-dark focus:ring-0 bg-gray-100 border-gray-300 focus:shadow focus:text-brand-light focus:border-brand"
+                            className="py-2 px-4 w-full appearance-none transition duration-150 ease-in-out border text-input text-13px lg:text-sm font-body rounded placeholder-[#B3B3B3] min-h-12 transition duration-200 ease-in-out text-brand-dark focus:ring-0 bg-gray-100 border-gray-300 focus:shadow focus:text-brand-dark focus:border-brand"
                         >
                             {categories.map((cat) => (
                                 <option key={cat._id || cat.id} value={cat._id}>
@@ -217,7 +275,7 @@ export default function ProductFormPage() {
                     <textarea
                         value={formData.description}
                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                        className="py-2 px-4 w-full appearance-none transition duration-150 ease-in-out border text-input text-13px lg:text-sm font-body rounded placeholder-[#B3B3B3] min-h-12 transition duration-200 ease-in-out text-brand-dark focus:ring-0 bg-gray-100 border-gray-300 focus:shadow focus:text-brand-light focus:border-brand h-32"
+                        className="py-2 px-4 w-full appearance-none transition duration-150 ease-in-out border text-input text-13px lg:text-sm font-body rounded placeholder-[#B3B3B3] min-h-12 transition duration-200 ease-in-out text-brand-dark focus:ring-0 bg-gray-100 border-gray-300 focus:shadow focus:text-brand-dark focus:border-brand h-32"
                     />
                 </div>
 

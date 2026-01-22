@@ -5,7 +5,7 @@ import usePrice from '@framework/product/use-price';
 export const CheckoutItem = ({ item }) => {
     const { price } = usePrice({
         amount: item.itemTotal,
-        currencyCode: 'USD',
+        currencyCode: 'BDT',
     });
     return (
         <div className="flex items-center py-4 border-b border-border-base ">
@@ -28,3 +28,4 @@ export const CheckoutItem = ({ item }) => {
         </div>
     );
 };
+

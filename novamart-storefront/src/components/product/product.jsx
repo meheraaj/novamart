@@ -59,7 +59,7 @@ const ProductSingleDetails = ({ lang }) => {
     data && {
       amount: data.sale_price ? data.sale_price : data.price,
       baseAmount: data.price,
-      currencyCode: 'USD',
+      currencyCode: 'BDT',
     }
   );
 

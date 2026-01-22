@@ -93,7 +93,7 @@ router.get('/users/address', verifyToken, async (req, res) => {
 // GET /api/wishlist
 router.get('/wishlist', verifyToken, async (req, res) => {
   try {
-    const wishlist = await Wishlist.find({ user: req.user.id });
+    const wishlist = await Wishlist.find({ user: req.user.id }).populate('product');
     res.json(wishlist);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -106,7 +106,7 @@ router.post('/wishlist', verifyToken, async (req, res) => {
     const { product_id } = req.body;
     if (!product_id) return res.status(400).json({ message: 'Product ID is required' });
 
-    const existingItem = await Wishlist.findOne({ user: req.user.id, product_id });
+    const existingItem = await Wishlist.findOne({ user: req.user.id, product: product_id });
 
     if (existingItem) {
       // Remove if exists
@@ -116,8 +116,7 @@ router.post('/wishlist', verifyToken, async (req, res) => {
       // Add if not exists
       const newItem = new Wishlist({
         user: req.user.id,
-        product_id,
-        // You might want to store more product details if needed for display without population
+        product: product_id,
       });
       await newItem.save();
       res.status(201).json({ message: 'Added to wishlist', active: true });

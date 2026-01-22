@@ -21,14 +21,16 @@ export default function ProductsPage() {
     const fetchData = async () => {
         try {
             const [prodRes, catRes] = await Promise.all([
-                http.get('/products'),
+                http.get('/products?limit=1000'), // Fetch all products for client-side pagination
                 http.get('/categories')
             ]);
 
             const prodData = prodRes.data;
             const catData = catRes.data;
 
-            setProducts(Array.isArray(prodData) ? prodData : []);
+            // Handle both paginated (new) and array (old) formats
+            const productsArray = prodData.data || (Array.isArray(prodData) ? prodData : []);
+            setProducts(productsArray);
             setCategories(Array.isArray(catData) ? catData : catData.data || []);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -128,7 +130,7 @@ export default function ProductsPage() {
                                         )}
                                     </td>
                                     <td className="p-4 font-medium text-brand-dark">{product.name}</td>
-                                    <td className="p-4 text-brand-muted">${product.price}</td>
+                                    <td className="p-4 text-brand-muted">৳{product.price}</td>
                                     <td className="p-4 text-brand-muted">{product.quantity}</td>
                                     <td className="p-4">
                                         <div className="flex space-x-2">
