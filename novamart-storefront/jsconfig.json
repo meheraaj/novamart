@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@framework/*": [
+        "src/framework/basic-rest/*"
+      ],
+      "@layouts/*": [
+        "src/app/components/layouts/*"
+      ],
+      "@settings/*": [
+        "src/settings/*"
+      ],
+      "@styles/*": [
+        "src/styles/*"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ],
+      "@assets/*": [
+        "src/assets/*"
+      ],
+      "@contexts/*": [
+        "src/contexts/*"
+      ],
+      "@hooks/*": [
+        "src/hooks/*"
+      ],
+      "@public/*": [
+        "public/*"
+      ]
+    }
+  }
+}

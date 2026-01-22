@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand Colors */
+  --color-brand: #02b290;
+  --color-brand-dark: #000000;
+  --color-brand-light: #ffffff;
+  --color-brand-muted: #4b5563; /* Darker gray (Tailwind gray-600) for better readability */
+  --color-brand-tree: #6fb48e;
+  --color-brand-tree-dark: #0b4635;
+  --color-brand-danger: #dc2626;
+
+  /* Additional Colors from shopify-main */
+  --color-yellow: #f98f14;
+  --color-yellow-50: #FAE642;
+  --color-yellow-100: #f3b81f;
+  --color-yellow-200: #ffc33c;
+  --color-yellow-300: #edc537;
+
+  --color-fill-base: #f9fafb; /* Slightly lighter gray (gray-50) */
+  --color-fill-secondary: #f3f4f6; /* gray-100 */
+  --color-fill-thumbnail: #f3f6fa;
+  --color-fill-dropdown-hover: #f6f9fc;
+  --color-fill-one: #f1f6f9;
+  --color-fill-two: #f2f2f2;
+  --color-fill-three: #e8ebf0;
+  --color-fill-four: #e5eaf1;
+
+  --color-border-base: #d1d5db; /* Darker border (gray-300) */
+  --color-border-one: #e3e8ec;
+  --color-border-two: #e2e8f0;
+  --color-border-three: #e6e6e6;
+  --color-border-four: #dee5ea;
+
+  /* Default Next.js Fonts */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}

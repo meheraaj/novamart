@@ -1,0 +1,36 @@
+import React from 'react';
+import cn from 'classnames';
+
+const Text = ({
+    style,
+    className,
+    variant = 'body',
+    children,
+    html,
+}) => {
+    const htmlContentProps = html
+        ? {
+            dangerouslySetInnerHTML: { __html: html },
+        }
+        : {};
+
+    return (
+        <p
+            className={cn(
+                'text-brand-muted text-sm leading-7',
+                {
+                    'lg:leading-[27px] lg:text-15px': variant === 'body', // default body text
+                    'lg:text-15px xl:text-base': variant === 'medium',
+                    'lg:leading-[1.85em]': variant === 'small',
+                },
+                className,
+            )}
+            style={style}
+            {...htmlContentProps}
+        >
+            {children}
+        </p>
+    );
+};
+
+export default Text;

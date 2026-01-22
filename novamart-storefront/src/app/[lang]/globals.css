@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@reference "../globals.css";
+
+/* Any lang-specific overrides go here */
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}

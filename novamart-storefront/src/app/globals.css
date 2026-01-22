@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand Colors */
+  --color-brand: #02b290;
+  --color-brand-dark: #000000;
+  --color-brand-light: #ffffff;
+  --color-brand-muted: #595959;
+  --color-brand-tree: #6fb48e;
+  --color-brand-tree-dark: #0b4635;
+  --color-brand-danger: #dc2626;
+
+  /* Default Next.js Fonts */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
