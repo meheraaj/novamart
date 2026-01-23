@@ -1,8 +1,7 @@
-﻿novamart-api/.env
-
-# Dependencies
+﻿# Dependencies
 node_modules/
 .next/
+
 # Logs
 npm-debug.log*
 yarn-debug.log*
@@ -13,5 +12,7 @@ logs/
 # Cache
 .npm
 .cache
-.env
 
+# Environment variables
+.env
+.env*
