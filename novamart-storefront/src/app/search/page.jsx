@@ -12,7 +12,7 @@ function SearchBarFallback() {
 }
 
 export default async function Page({ params }) {
-    const { lang } = await params;
+    const lang = 'en';
 
     return (
         <>

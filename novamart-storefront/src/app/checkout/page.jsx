@@ -8,7 +8,7 @@ export const metadata = {
 };
 
 export default async function CheckoutPage({ params }) {
-    const { lang } = await params;
+    const lang = 'en';
     return (
         <>
             <Divider />

@@ -47,7 +47,7 @@ const accountMenu = [
 ];
 
 export default async function AccountLayout({ children, params }) {
-    const { lang } = await params;
+    const lang = 'en';
     return (
         <div className="border-t border-b border-border-base">
             <Container>

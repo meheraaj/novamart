@@ -12,10 +12,12 @@ import Heading from '@components/ui/heading';
 import Text from '@components/ui/text';
 import DeleteIcon from '@components/icons/delete-icon';
 import { useTranslation } from 'src/app/i18n/client';
+import { useRouter } from 'next/navigation';
 
 export default function Cart({ lang }) {
   const { t } = useTranslation(lang, 'common');
-  const { closeDrawer } = useUI();
+  const { closeDrawer, isAuthorized, openModal, setModalView } = useUI();
+  const router = useRouter();
   const { items, total, isEmpty, resetCart } = useCart();
   const { price: cartTotal } = usePrice({
     amount: total,
@@ -73,10 +75,16 @@ export default function Cart({ lang }) {
           </div>
         </div>
         <div className="flex flex-col" onClick={closeDrawer}>
-          <Link
-            href={isEmpty === false ? `${ROUTES.CHECKOUT}` : `/`}
+          <div
+            onClick={() => {
+              if (!isAuthorized) {
+                setModalView('LOGIN_VIEW');
+                return openModal();
+              }
+              router.push(ROUTES.CHECKOUT);
+            }}
             className={cn(
-              'w-full px-5 py-3 md:py-4 flex items-center justify-center bg-heading rounded font-semibold text-sm sm:text-15px text-brand-light bg-brand focus:outline-none transition duration-300 hover:bg-opacity-90',
+              'w-full px-5 py-3 md:py-4 flex items-center justify-center bg-heading rounded font-semibold text-sm sm:text-15px text-brand-light bg-brand focus:outline-none transition duration-300 hover:bg-opacity-90 cursor-pointer',
               {
                 'cursor-not-allowed !text-brand-dark !text-opacity-25 bg-fill-four hover:bg-fill-four':
                   isEmpty,
@@ -84,7 +92,7 @@ export default function Cart({ lang }) {
             )}
           >
             <span className="py-0.5">{t('text-proceed-to-checkout')}</span>
-          </Link>
+          </div>
         </div>
       </div>
     </div>

@@ -76,13 +76,13 @@ function SidebarMenuItem({ className, item, depth = 0, lang }) {
                     )}
                 >
                     {icon && (
-                        <div className="inline-flex shrink-0 2xl:w-12 2xl:h-12 3xl:w-auto 3xl:h-auto">
+                        <div className="inline-flex shrink-0 w-10 h-10">
                             <Image
                                 src={icon ?? '/assets/placeholder/category-small.svg'}
                                 alt={name || t('text-category-thumbnail')}
                                 width={40}
                                 height={40}
-                                style={{ width: 'auto', height: 'auto' }}
+                                className="object-contain"
                             />
                         </div>
                     )}

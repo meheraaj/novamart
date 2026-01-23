@@ -1,12 +1,26 @@
 'use client';
 
-import { ProductGrid } from '@components/product/product-grid';
-import { ShopFilters } from '@components/search/filters';
-import SearchTopBar from '@components/search/search-top-bar';
-import Container from '@components/ui/container';
-import { Element } from 'react-scroll';
+import { useProductsQuery } from '@framework/product/get-all-products';
+import { LIMITS } from '@framework/utils/limits';
+import { useSearchParams } from 'next/navigation';
 
 export default function ProductsPageContent({ lang }) {
+    const searchParams = useSearchParams();
+    const queryString = searchParams.toString();
+    const newQuery = queryString ? `?${queryString}` : '';
+
+    const {
+        isFetching: isLoading,
+        isFetchingNextPage: loadingMore,
+        fetchNextPage,
+        hasNextPage,
+        data,
+        error,
+    } = useProductsQuery({
+        limit: LIMITS.PRODUCTS_LIMITS,
+        newQuery,
+    });
+
     return (
         <Container>
             {/* @ts-ignore */}
@@ -16,7 +30,15 @@ export default function ProductsPageContent({ lang }) {
                 </div>
                 <div className="w-full lg:ltr:-ml-4 lg:rtl:-mr-2 xl:ltr:-ml-8 xl:rtl:-mr-8 lg:-mt-1">
                     <SearchTopBar lang={lang} />
-                    <ProductGrid lang={lang} />
+                    <ProductGrid
+                        lang={lang}
+                        data={data}
+                        isLoading={isLoading}
+                        error={error}
+                        loadingMore={loadingMore}
+                        fetchNextPage={fetchNextPage}
+                        hasNextPage={hasNextPage}
+                    />
                 </div>
             </Element>
         </Container>

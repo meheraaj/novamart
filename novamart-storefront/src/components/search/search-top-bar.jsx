@@ -9,7 +9,7 @@ import { useTranslation } from 'src/app/i18n/client';
 import { getDirection } from '@utils/get-direction';
 import motionProps from '@components/common/drawer/motion';
 
-export default function SearchTopBar({ lang }) {
+export default function SearchTopBar({ lang, count }) {
   const { openFilter, displayFilter, closeFilter } = useUI();
   const { t } = useTranslation(lang, 'common');
   const dir = getDirection(lang);
@@ -27,7 +27,7 @@ export default function SearchTopBar({ lang }) {
 
       <div className="flex items-center justify-end w-full lg:justify-between">
         <div className="shrink-0 text-brand-dark font-medium text-15px leading-4 md:ltr:mr-6 md:rtl:ml-6 hidden lg:block mt-0.5">
-          2,683 {t('text-items-found')}
+          {count} {t('text-items-found')}
         </div>
         <ListBox
           options={[

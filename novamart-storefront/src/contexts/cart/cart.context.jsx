@@ -55,15 +55,15 @@ export function CartProvider(props) {
                     // Smart Merge: If we have local items that are NOT in server cart (or just merge all)
                     // But wait, if we just logged in, 'state.items' might be the guest cart.
                     // We should merge guest cart into server cart.
-                    
+
                     // Note: This logic runs on mount or when called. 
                     // If 'state.items' has stuff, it's the local cart.
                     if (state.items.length > 0) {
                         finalItems = mergeItems(state.items, data.items);
                         // If we merged, we should probably sync back to server immediately
-                        await http.post(API_ENDPOINTS.CART, { ...state, items: finalItems });
+                        await http.post(API_ENDPOINTS.CART, { ...state, totalPrice: state.total, items: finalItems });
                     }
-                    
+
                     dispatch({ type: 'REPLACE_CART', items: finalItems });
                 }
             } catch (err) {
@@ -84,7 +84,7 @@ export function CartProvider(props) {
             // Debounce could be good here, but for now direct sync
             // We need to calculate totals for the payload if the API expects them
             // The reducer calculates them in 'state'
-            http.post(API_ENDPOINTS.CART, state)
+            http.post(API_ENDPOINTS.CART, { ...state, totalPrice: state.total })
                 .catch(err => console.error("Failed to sync cart", err));
         }
     }, [state, saveCart]);

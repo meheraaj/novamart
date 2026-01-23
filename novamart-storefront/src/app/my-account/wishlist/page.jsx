@@ -5,6 +5,6 @@ export const metadata = {
 };
 
 export default async function WishlistPage({ params }) {
-    const { lang } = await params;
+    const lang = 'en';
     return <Wishlist lang={lang} />;
 }

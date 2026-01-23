@@ -10,7 +10,7 @@ export default function AdminLayout({ children }) {
     return (
         <div className="flex min-h-screen bg-fill-base">
             {!isAuthPage && <Sidebar />}
-            <main className={`flex-1 p-8 ${!isAuthPage ? 'ml-64' : ''}`}>
+            <main className="flex-1 p-8">
                 {children}
             </main>
         </div>

@@ -5,7 +5,7 @@ export const metadata = {
 };
 
 export default async function Order({ params }) {
-    const { lang } = await params;
+    const lang = 'en';
     return (
         <>
             <CompleteOrderContent lang={lang} />

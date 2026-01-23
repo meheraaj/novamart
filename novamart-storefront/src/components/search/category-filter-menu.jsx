@@ -32,7 +32,7 @@ function CategoryFilterMenuItem({
   const isActive =
     checkIsActive(formState, item.slug) ||
     item?.children?.some((_item) => checkIsActive(formState, _item.slug));
-  
+
   const [isOpen, setOpen] = useState(isActive);
   const [subItemAction, setSubItemAction] = useState(false);
 
@@ -97,23 +97,21 @@ function CategoryFilterMenuItem({
           )}
         >
           {icon && (
-            <div className="inline-flex shrink-0 2xl:w-12 2xl:h-12 3xl:w-auto 3xl:h-auto ltr:mr-2.5 rtl:ml-2.5 md:ltr:mr-4 md:rtl:ml-4 2xl:ltr:mr-3 2xl:rtl:ml-3 3xl:ltr:mr-4 3xl:rtl:ml-4">
+            <div className="inline-flex shrink-0 w-10 h-10 ltr:mr-2.5 rtl:ml-2.5 md:ltr:mr-4 md:rtl:ml-4 2xl:ltr:mr-3 2xl:rtl:ml-3 3xl:ltr:mr-4 3xl:rtl:ml-4">
               <Image
                 src={icon ?? '/assets/placeholder/category-small.svg'}
                 alt={name || t('text-category-thumbnail')}
                 width={40}
                 height={40}
-                style={{ width: 'auto' }}
               />
             </div>
           )}
           <span className="text-brand-dark capitalize py-0.5">{name}</span>
           {depth > 0 && (
             <span
-              className={`w-5.5 h-5.5 text-13px flex items-center justify-center border-2 border-border-four rounded-full ltr:ml-auto rtl:mr-auto transition duration-500 ease-in-out group-hover:border-yellow-100 text-brand-light ${
-                formState.includes(item.slug) &&
+              className={`w-5.5 h-5.5 text-13px flex items-center justify-center border-2 border-border-four rounded-full ltr:ml-auto rtl:mr-auto transition duration-500 ease-in-out group-hover:border-yellow-100 text-brand-light ${formState.includes(item.slug) &&
                 'border-yellow-100 bg-yellow-100'
-              }`}
+                }`}
             >
               {formState.includes(item.slug) && <FaCheck />}
             </span>

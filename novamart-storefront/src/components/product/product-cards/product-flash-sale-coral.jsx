@@ -95,8 +95,11 @@ const ProductFlashSaleCoral = ({
         </div>
 
         <div className="flex flex-col pb-5 lg:pb-6 mb-0.5 lg:pt-3 h-full text-center">
-          <div className="-mx-1 mb-1 lg:mb-2.5">
-            <span className="inline-block mx-1 text-xl font-semibold xl:text-2xl text-brand-dark">
+          <h2 className="text-base leading-5 text-brand-dark lg:text-lg xl:text-xl sm:leading-6 font-bold mb-1 lg:mb-2 text-center">
+            {name}
+          </h2>
+          <div className="-mx-1">
+            <span className="inline-block mx-1 text-xl xl:text-2xl text-brand-dark text-center w-full">
               {product_type === 'variable'
                 ? `${minPrice} - ${maxPrice}`
                 : price}
@@ -107,9 +110,6 @@ const ProductFlashSaleCoral = ({
               </del>
             )}
           </div>
-          <h2 className="text-sm leading-5 text-brand-dark lg:text-15px xl:text-base sm:leading-6">
-            {name}
-          </h2>
         </div>
       </div>
       <Countdown date={date} intervalDelay={1000} renderer={renderer} />

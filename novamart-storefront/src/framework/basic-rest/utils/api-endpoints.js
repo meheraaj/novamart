@@ -1,5 +1,6 @@
 export const API_ENDPOINTS = {
     LOGIN: '/auth/login',
+    FIREBASE_LOGIN: '/auth/firebase',
     REGISTER: '/auth/register',
     LOGOUT: '/auth/logout',
     FORGET_PASSWORD: '/auth/forget-password',
@@ -32,4 +33,5 @@ export const API_ENDPOINTS = {
     CART: '/cart',
     CHANGE_PASSWORD: '/users/change-password',
     SEARCH_PRODUCTS: '/products/search',
+    WIDGETS: '/widgets',
 };

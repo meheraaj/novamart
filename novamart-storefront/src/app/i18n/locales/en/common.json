@@ -236,5 +236,8 @@
   "text-view": "View",
   "text-add-to-cart-btn": "Add",
   "text-products-of-the-week": "Products of the week",
-  "text-view-all": "View All"
+  "text-view-all": "View All",
+  "button-save-number": "Save Number",
+  "text-add-phone-number-helper": "Please add your phone number so we can contact you regarding your delivery.",
+  "text-privacy-policy": "Privacy Policy"
 }

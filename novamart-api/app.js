@@ -87,6 +87,9 @@ app.use("/api/brands", require("./routes/brands"));
 app.use("/api/attributes", require("./routes/attributes"));
 app.use("/api/cart", require("./routes/cart"));
 app.use("/api/analytics", require("./routes/analytics"));
+app.use("/api/widgets", require("./routes/widgets"));
+
+
 app.use("/api", require("./routes/mocks")); // Handle legacy .json requests
 app.use("/api", require("./routes/users")); // Mounts /api/address, /api/wishlist, /api/login, etc.
 

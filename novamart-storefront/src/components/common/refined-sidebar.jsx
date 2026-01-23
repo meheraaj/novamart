@@ -5,13 +5,21 @@ import { homeRefinedBanner as banner } from '@framework/static/banner';
 import { useFlashSellProductsQuery } from '@framework/product/get-all-flash-sell-products';
 import { LIMITS } from '@framework/utils/limits';
 import { useTranslation } from 'src/app/i18n/client';
+import { useWidgetQuery } from '@framework/widgets/get-widget';
 
 const RefinedSidebar = ({ lang, className }) => {
     const { t } = useTranslation(lang, 'common');
-    const limit = LIMITS.POPULAR_PRODUCTS_TWO_LIMITS;
-    const { data, isLoading, error } = useFlashSellProductsQuery({
-        limit: limit,
-    });
+
+    // Fetch dynamic widget settings
+    const { data: widgetData, isLoading: isWidgetLoading } = useWidgetQuery('deals-of-week');
+
+    // Backward compatibility or fallback: if no widget, maybe fall back to flash sales?
+    // But for now, we assume widget exists.
+
+    // Verify product exists in widget response
+    const product = widgetData?.product;
+    const expiryDate = widgetData?.settings?.expiryDate ? new Date(widgetData.settings.expiryDate).getTime() : Date.now() + 4000000 * 60;
+
     return (
         <div
             className={cn(
@@ -21,13 +29,17 @@ const RefinedSidebar = ({ lang, className }) => {
         >
             <div className="h-auto overflow-hidden border-2 border-yellow-200 rounded-md 3xl:h-full shadow-card">
                 <h2 className="bg-yellow-200 text-center font-bold text-brand-dark font-manrope p-2.5 text-15px lg:text-base">
-                    {t('text-deals-of-the-week')}
+                    {widgetData?.title ? t(widgetData.title) : t('text-deals-of-the-week')}
                 </h2>
-                <ProductFlashSaleCoral
-                    product={data?.[0]}
-                    date={Date.now() + 4000000 * 60}
-                    lang={lang}
-                />
+                {isWidgetLoading ? (
+                    <div className="p-4">Loading Deal...</div>
+                ) : (
+                    <ProductFlashSaleCoral
+                        product={product}
+                        date={expiryDate}
+                        lang={lang}
+                    />
+                )}
             </div>
 
             <BannerCard banner={banner} className="hidden md:flex" lang={lang} />

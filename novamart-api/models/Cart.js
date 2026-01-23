@@ -4,7 +4,7 @@ const cartItemSchema = new mongoose.Schema({
   id: { type: String, required: true },
   name: { type: String, required: true },
   slug: { type: String },
-  image: { type: String },
+  image: { type: mongoose.Schema.Types.Mixed }, // Can be string or object
   price: { type: Number, required: true },
   sale_price: { type: Number },
   quantity: { type: Number, required: true, min: 1 },

@@ -1,13 +1,11 @@
 import Container from '@components/ui/container';
 import ProductSingleDetails from '@components/product/product';
-import DownloadApps from '@components/common/download-apps';
-import PopcornJerkyProductFeed from '@components/product/feeds/popcorn-jerky-product-feed';
 import RelatedProductFeed from '@components/product/feeds/related-product-feed';
 import Breadcrumb from '@components/ui/breadcrumb';
 import Divider from '@components/ui/divider';
 
 export default async function Page({ params }) {
-    const { lang } = await params;
+    const lang = 'en';
     return (
         <>
             <Divider />
@@ -19,8 +17,6 @@ export default async function Page({ params }) {
             </div>
 
             <RelatedProductFeed uniqueKey="related-products" lang={lang} />
-            <PopcornJerkyProductFeed lang={lang} />
-            <DownloadApps lang={lang} />
         </>
     );
 }

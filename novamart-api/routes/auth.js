@@ -4,6 +4,7 @@ const path = require('path');
 const User = require("../models/User");
 const bcrypt = require("bcryptjs"); // Using bcryptjs as installed
 const jwt = require("jsonwebtoken");
+const admin = require("../config/firebase-admin");
 
 // REGISTER
 router.post("/register", async (req, res) => {
@@ -66,6 +67,57 @@ router.post("/login", async (req, res) => {
     res.status(200).json({ ...others, accessToken });
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+});
+
+// FIREBASE LOGIN (Google/GitHub)
+router.post("/firebase", async (req, res) => {
+  const { idToken } = req.body;
+  
+  if (!idToken) {
+    return res.status(400).json({ message: "idToken is required" });
+  }
+
+  try {
+    // Verify the Firebase ID token
+    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    const { email, name, picture } = decodedToken;
+
+    if (!email) {
+      return res.status(400).json({ message: "Email not provided by Firebase" });
+    }
+
+    // Find or create user
+    let user = await User.findOne({ email });
+    
+    if (!user) {
+      // Create new user for social login
+      user = new User({
+        name: name || email.split('@')[0],
+        email: email,
+        password: Math.random().toString(36).slice(-10), // Random password
+        role: 'user',
+        image: picture // Store profile picture if available
+      });
+      await user.save();
+      console.log(`New user created via Firebase: ${email}`);
+    }
+
+    // Generate local JWT
+    const accessToken = jwt.sign(
+      {
+        id: user._id,
+        isAdmin: user.role === "admin",
+      },
+      process.env.JWT_SEC || "secret",
+      { expiresIn: "3d" }
+    );
+
+    const { password, ...others } = user._doc;
+    res.status(200).json({ ...others, accessToken });
+  } catch (err) {
+    console.error("Firebase Auth Error:", err.message);
+    res.status(401).json({ message: "Firebase authentication failed", error: err.message });
   }
 });
 

@@ -7,7 +7,7 @@ import Image from '@components/ui/image';
 import { ROUTES } from '@utils/routes';
 import { useTranslation } from 'src/app/i18n/client';
 
-const WidgetAbout = ({ lang, social, className }) => {
+const WidgetAbout = ({ lang, className }) => {
     const { t } = useTranslation(lang, 'footer');
 
     return (
@@ -20,32 +20,7 @@ const WidgetAbout = ({ lang, social, className }) => {
                 <Text>{t('text-about-us')}</Text>
             </div>
 
-            {social && (
-                <ul className="flex flex-wrap justify-center mx-auto sm:justify-start">
-                    {social?.map((item) => (
-                        <li
-                            className="transition hover:opacity-80 last:ltr:mr-0 md:ltr:mr-5 md:mx-0 ltr:mr-4 last:rtl:ml-0 rtl:ml-4 md:rtl:ml-5"
-                            key={`social-list--key${item.id}`}
-                        >
-                            {/* --- FIXED LINK BELOW --- */}
-                            <Link 
-                                href={item.path ? item.path : '/#'}
-                                target="_blank" 
-                                rel="noreferrer"
-                            >
-                                <Image
-                                    src={item.image}
-                                    alt={item.name}
-                                    height={item.height}
-                                    width={item.width}
-                                    className="transform scale-85 md:scale-100"
-                                    style={{ width: 'auto' }}
-                                />
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            )}
+
         </div>
     );
 };

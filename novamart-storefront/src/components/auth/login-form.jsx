@@ -12,9 +12,12 @@ import Image from '@components/ui/image';
 import { useModalAction } from '@components/common/modal/modal.context';
 import Switch from '@components/ui/switch';
 import CloseButton from '@components/ui/close-button';
-import { FaFacebook, FaTwitter, FaLinkedinIn } from 'react-icons/fa';
-import cn from 'classnames';
 import { useCart } from '@contexts/cart/cart.context';
+import cn from 'classnames';
+import { auth, googleProvider, githubProvider } from '@lib/firebase';
+import { signInWithPopup } from 'firebase/auth';
+import { useSocialLoginMutation } from '@framework/auth/use-social-login';
+import { FaGoogle, FaGithub } from 'react-icons/fa';
 
 const LoginForm = ({
   lang,
@@ -24,6 +27,7 @@ const LoginForm = ({
   const { t } = useTranslation(lang);
   const { closeModal, openModal } = useModalAction();
   const { mutate: login, isPending } = useLoginMutation();
+  const { mutate: socialLogin, isPending: isSocialPending } = useSocialLoginMutation();
   const [remember, setRemember] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const { loadCart } = useCart();
@@ -55,6 +59,36 @@ const LoginForm = ({
       remember_me: true,
     });
     closeModal();
+  }
+
+  async function handleGoogleLogin() {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const idToken = await result.user.getIdToken();
+      socialLogin(idToken, {
+        onSuccess: () => {
+          loadCart();
+        }
+      });
+    } catch (error) {
+      console.error('Google Login Error:', error);
+      setErrorMessage('Google Login Failed');
+    }
+  }
+
+  async function handleGithubLogin() {
+    try {
+      const result = await signInWithPopup(auth, githubProvider);
+      const idToken = await result.user.getIdToken();
+      socialLogin(idToken, {
+        onSuccess: () => {
+          loadCart();
+        }
+      });
+    } catch (error) {
+      console.error('Github Login Error:', error);
+      setErrorMessage('Github Login Failed');
+    }
   }
 
   function handleSignUp() {
@@ -175,21 +209,19 @@ const LoginForm = ({
           <div className="flex justify-center mt-5 space-x-2.5">
             <button
               className="flex items-center justify-center w-10 h-10 transition-all border rounded-full cursor-pointer group border-border-one hover:border-brand focus:border-brand focus:outline-none"
-              onClick={handelSocialLogin}
+              onClick={handleGoogleLogin}
+              disabled={isSocialPending}
+              title="Login with Google"
             >
-              <FaFacebook className="w-4 h-4 text-opacity-50 transition-all text-brand-dark group-hover:text-brand " />
+              <FaGoogle className="w-4 h-4 text-opacity-50 transition-all text-brand-dark group-hover:text-brand " />
             </button>
             <button
               className="flex items-center justify-center w-10 h-10 transition-all border rounded-full cursor-pointer group border-border-one hover:border-brand focus:border-brand focus:outline-none"
-              onClick={handelSocialLogin}
+              onClick={handleGithubLogin}
+              disabled={isSocialPending}
+              title="Login with GitHub"
             >
-              <FaTwitter className="w-4 h-4 text-opacity-50 transition-all text-brand-dark group-hover:text-brand" />
-            </button>
-            <button
-              className="flex items-center justify-center w-10 h-10 transition-all border rounded-full cursor-pointer group border-border-one hover:border-brand focus:border-brand focus:outline-none"
-              onClick={handelSocialLogin}
-            >
-              <FaLinkedinIn className="w-4 h-4 text-opacity-50 transition-all text-brand-dark group-hover:text-brand" />
+              <FaGithub className="w-4 h-4 text-opacity-50 transition-all text-brand-dark group-hover:text-brand" />
             </button>
           </div>
         </div>

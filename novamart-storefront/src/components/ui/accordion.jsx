@@ -51,13 +51,11 @@ export const Accordion = ({
                                 leaveFrom="transform scale-100 opacity-100"
                                 leaveTo="transform scale-5 opacity-0"
                             >
-                                {open && (
-                                    <DisclosurePanel static>
-                                        <div className="px-5 pb-4 -mt-1 text-sm leading-7 2xl:pb-7 2xl:px-6 2xl:mt-0 2xl:text-15px text-brand-dark opacity-70">
-                                            {t(content)}
-                                        </div>
-                                    </DisclosurePanel>
-                                )}
+                                <DisclosurePanel static>
+                                    <div className="px-5 pb-4 -mt-1 text-sm leading-7 2xl:pb-7 2xl:px-6 2xl:mt-0 2xl:text-15px text-brand-dark opacity-70">
+                                        {t(content)}
+                                    </div>
+                                </DisclosurePanel>
                             </Transition>
                         </>
                     )}

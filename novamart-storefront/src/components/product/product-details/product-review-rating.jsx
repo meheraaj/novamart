@@ -30,14 +30,14 @@ const data = [
 
 const ProductReviewRating = ({ lang }) => {
   return (
-    <div className="lg:flex">
-      <div className="pt-2">
+    <div className="flex flex-col lg:flex-row lg:space-x-10 xl:space-x-14 2xl:space-x-20">
+      <div className="w-full pt-2">
         {data?.map((item) => (
           <ReviewCard item={item} key={`review-key-${item.id}`} lang={lang} />
         ))}
       </div>
       <ReviewForm
-        className="lg:w-125 xl:w-135 2xl:w-150 3xl:w-[730px] lg:ltr:pl-10 lg:rtl:pr-10 xl:ltr:pl-14 xl:rtl:pr-14 3xl:ltr:pl-20 3xl:rtl:pr-20 shrink-0 pt-10"
+        className="w-full lg:w-125 xl:w-135 2xl:w-150 shrink-0 pt-10 lg:pt-2"
         lang={lang}
       />
     </div>

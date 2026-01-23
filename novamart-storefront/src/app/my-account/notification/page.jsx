@@ -5,6 +5,6 @@ export const metadata = {
 };
 
 export default async function Notification({ params }) {
-    const { lang } = await params;
+    const lang = 'en';
     return <Notifications lang={lang} />;
 }

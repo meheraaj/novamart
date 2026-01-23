@@ -5,6 +5,6 @@ export const metadata = {
 };
 
 export default async function OrdersTablePage({ params }) {
-    const { lang } = await params;
+    const lang = 'en';
     return <OrdersPageContent lang={lang} />;
 }

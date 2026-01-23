@@ -1,32 +1,35 @@
 'use client';
 
-import i18next from 'i18next';
-import {
-    initReactI18next,
-    useTranslation as useTranslationOrg,
-} from 'react-i18next';
-import resourcesToBackend from 'i18next-resources-to-backend';
-import { getOptions } from './settings';
+import { translations } from './translations';
 
-const runsOnServerSide = typeof window === 'undefined';
+export function useTranslation(lng, ns, options) {
+    // Determine namespace. 
+    // If first arg matches a namespace, use it (standard react-i18next convention used in some components).
+    // If first arg is 'en' (or other lang code) and second is namespace (used in i18n/client usages), use second.
 
-// Initialize i18next with hardcoded English
-i18next
-    .use(initReactI18next)
-    .use(
-        resourcesToBackend(
-            (language, namespace) =>
-                import(`./locales/en/${namespace}.json`), // Force import from 'en'
-        ),
-    )
-    .init({
-        ...getOptions(),
-        lng: 'en', // Force language to 'en'
-        detection: undefined,
-        preload: runsOnServerSide ? ['en'] : [],
-    });
+    let validNs = 'common'; // default
 
-export function useTranslation(lang, ns, options) {
-    // We ignore the `lang` argument and use the hardcoded 'en'
-    return useTranslationOrg(ns, options);
+    if (translations[lng]) {
+        validNs = lng;
+    } else if (ns && translations[ns]) {
+        validNs = ns;
+    }
+
+    const dictionary = translations[validNs] || {};
+
+    return {
+        t: (key) => {
+            if (typeof key === 'string' && key.includes(':')) {
+                const [namespace, realKey] = key.split(':');
+                if (translations[namespace]) {
+                    return translations[namespace][realKey] || key;
+                }
+            }
+            return dictionary[key] || key;
+        },
+        i18n: {
+            changeLanguage: () => { },
+            language: 'en',
+        },
+    };
 }

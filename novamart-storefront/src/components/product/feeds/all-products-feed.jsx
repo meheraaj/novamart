@@ -13,6 +13,7 @@ import { useTranslation } from 'src/app/i18n/client';
 import { usePathname } from 'next/navigation';
 import { LIMITS } from '@framework/utils/limits';
 import useQueryParam from '@utils/use-query-params';
+import Button from '@components/ui/button';
 
 const AllProductFeed = ({
   lang,
@@ -103,6 +104,19 @@ const AllProductFeed = ({
               })}
             </>
           )}
+        </div>
+      )}
+      {hasNextPage && (
+        <div className="pt-8 text-center xl:pt-10">
+          <Button
+            loading={loadingMore}
+            disabled={loadingMore}
+            onClick={() => fetchNextPage()}
+            variant="primary"
+            className="w-full sm:w-auto"
+          >
+            {t('button-load-more')}
+          </Button>
         </div>
       )}
     </div>

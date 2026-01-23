@@ -28,6 +28,8 @@ import ProductDetailsTab from '@components/product/product-details/product-tab';
 import VariationPrice from './variation-price';
 import isEqual from 'lodash/isEqual';
 import { useTranslation } from 'src/app/i18n/client';
+import Heading from '@components/ui/heading';
+import Text from '@components/ui/text';
 
 const ProductSingleDetails = ({ lang }) => {
   const { t } = useTranslation(lang, 'common');
@@ -131,48 +133,28 @@ const ProductSingleDetails = ({ lang }) => {
   }
 
   return (
+    <>
     <div className="block grid-cols-9 gap-x-10 xl:gap-x-14 pt-7 pb-10 lg:grid lg:pb-14 2xl:pb-20 items-start">
-      {width < 1025 ? (
-        <div className="col-span-5 mb-6 overflow-hidden border rounded-md border-border-base md:mb-8 lg:mb-0">
-          {!!data?.gallery?.length ? (
-            <ThumbnailCarousel
-              gallery={data?.gallery}
-              thumbnailClassName="xl:w-[700px] 2xl:w-[900px]"
-              galleryClassName="xl:w-[150px] 2xl:w-[170px]"
+      <div className="col-span-5 mb-6 overflow-hidden border rounded-md border-border-base md:mb-8 lg:mb-0">
+        {!!data?.gallery?.length ? (
+          <ThumbnailCarousel
+            gallery={data?.gallery}
+            thumbnailClassName="xl:w-[700px] 2xl:w-[900px]"
+            galleryClassName="xl:w-[150px] 2xl:w-[170px]"
+            lang={lang}
+          />
+        ) : (
+          <div className="flex items-center justify-center w-auto">
+            <Image
+              src={data?.image?.original ?? '/product-placeholder.svg'}
+              alt={data?.name}
+              width={900}
+              height={680}
+              style={{ width: 'auto' }}
             />
-          ) : (
-            <div className="flex items-center justify-center w-auto">
-              <Image
-                src={data?.image?.original ?? '/product-placeholder.svg'}
-                alt={data?.name}
-                width={900}
-                height={680}
-                style={{ width: 'auto' }}
-              />
-            </div>
-          )}
-        </div>
-      ) : (
-        <div className="col-span-5 mb-6 overflow-hidden border rounded-md border-border-base md:mb-8 lg:mb-0">
-          {!!data?.gallery?.length ? (
-            <ThumbnailCarousel
-              gallery={data?.gallery}
-              thumbnailClassName="xl:w-[700px] 2xl:w-[900px]"
-              galleryClassName="xl:w-[150px] 2xl:w-[170px]"
-            />
-          ) : (
-            <div className="flex items-center justify-center w-auto">
-              <Image
-                src={data?.image?.original ?? '/product-placeholder.svg'}
-                alt={data?.name}
-                width={900}
-                height={680}
-                style={{ width: 'auto' }}
-              />
-            </div>
-          )}
-        </div>
-      )}
+          </div>
+        )}
+      </div>
 
       <div className="flex flex-col col-span-5 shrink-0 xl:col-span-4 xl:ltr:pl-2 xl:rtl:pr-2">
         <div className="pb-3 lg:pb-5">
@@ -337,8 +319,9 @@ const ProductSingleDetails = ({ lang }) => {
           </ul>
         )}
       </div>
-      <ProductDetailsTab lang={lang} />
     </div>
+    <ProductDetailsTab lang={lang} product={data} />
+    </>
   );
 };
 

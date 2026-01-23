@@ -1,4 +1,3 @@
-import DownloadApps from '@components/common/download-apps';
 import PageHeroSection from '@components/ui/page-hero-section';
 import ProductsPageContent from './products-page-content';
 import { Suspense } from 'react';
@@ -12,7 +11,7 @@ function SearchBarFallback() {
 }
 
 export default async function Page({ params }) {
-    const { lang } = await params;
+    const lang = 'en';
 
     return (
         <>
@@ -20,7 +19,6 @@ export default async function Page({ params }) {
             <Suspense fallback={<SearchBarFallback />}>
                 <ProductsPageContent lang={lang} />
             </Suspense>
-            <DownloadApps lang={lang} />
         </>
     );
 }

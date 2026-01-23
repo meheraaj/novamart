@@ -12,10 +12,11 @@ const Sidebar = () => {
     { name: 'Categories', path: '/categories' },
     { name: 'Orders', path: '/orders' },
     { name: 'Users', path: '/users' },
+    { name: 'Widgets', path: '/widgets' },
   ];
 
   return (
-    <aside className="w-64 bg-white border-r border-border-base h-screen fixed left-0 top-0 overflow-y-auto">
+    <aside className="w-64 bg-white border-r border-border-base h-screen sticky top-0 overflow-y-auto shrink-0">
       <div className="p-6 border-b border-border-base">
         <h1 className="text-2xl font-bold text-brand">NovaMart Admin</h1>
       </div>

@@ -8,24 +8,9 @@ import { useProductsQuery } from '@framework/product/get-all-products';
 import { LIMITS } from '@framework/utils/limits';
 import { useTranslation } from 'src/app/i18n/client';
 
-export const ProductGrid = ({ className = '', lang }) => {
+export const ProductGrid = ({ className = '', lang, data, isLoading, error, loadingMore, fetchNextPage, hasNextPage }) => {
   const { t } = useTranslation(lang, 'common');
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const queryString = searchParams.toString();
-  const newQuery = queryString ? `?${queryString}` : '';
 
-  const {
-    isFetching: isLoading,
-    isFetchingNextPage: loadingMore,
-    fetchNextPage,
-    hasNextPage,
-    data,
-    error,
-  } = useProductsQuery({
-    limit: LIMITS.PRODUCTS_LIMITS,
-    newQuery,
-  });
 
   return (
     <>
@@ -58,7 +43,7 @@ export const ProductGrid = ({ className = '', lang }) => {
           })
         )}
       </div>
-      
+
       {hasNextPage && (
         <div className="pt-8 text-center xl:pt-10">
           <Button

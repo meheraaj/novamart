@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
     enum: ['user', 'admin'],
     default: 'user',
   },
+  image: { type: String },
   // Add other fields if needed based on login.json or register.json
 }, { timestamps: true });
 

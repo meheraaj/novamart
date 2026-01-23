@@ -7,7 +7,7 @@ import ProductCardLoader from '@components/ui/loaders/product-card-loader';
 import { LIMITS } from '@framework/utils/limits';
 import Alert from '@components/ui/alert';
 import ProductFlashSaleCoral from '@components/product/product-cards/product-flash-sale-coral';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'src/app/i18n/client';
 import { Element } from 'react-scroll';
 
 export default function PopularProductWithBestDeals({
@@ -28,7 +28,7 @@ export default function PopularProductWithBestDeals({
         headingPosition="center"
         lang={lang}
       />
-      
+
       <Element
         name="grid"
         className="grid-cols-7 gap-3 md:grid lg:grid-cols-5 2xl:grid-cols-7 lg:gap-5 xl:gap-7"
@@ -45,7 +45,7 @@ export default function PopularProductWithBestDeals({
             />
           </div>
         </div>
-        
+
         <div className="grid grid-cols-2 col-span-4 gap-3 lg:col-span-3 2xl:col-span-5 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 md:gap-4 2xl:gap-5">
           {error ? (
             <Alert message={error?.message} className="col-span-full" />

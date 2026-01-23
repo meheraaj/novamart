@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Order = require('../models/Order');
+const Product = require('../models/Product');
 const User = require('../models/User');
 const { verifyToken } = require('../middleware/verifyToken');
 
@@ -37,6 +38,28 @@ router.post('/', verifyToken, async (req, res) => {
     console.log('New Order ID:', newOrder.id);
 
     const savedOrder = await newOrder.save();
+
+    // Decrement stock for each product
+    if (req.body.products && Array.isArray(req.body.products)) {
+      for (const item of req.body.products) {
+        // Assuming item has productId (or id) and orderQuantity (or quantity)
+        // Adjust field names based on actual payload structure
+        const productId = item.id || item.productId || item.product_id;
+        const quantityOrdered = item.quantity || item.orderQuantity;
+
+        if (productId && quantityOrdered) {
+          console.log(`Decrementing stock for product ${productId} by ${quantityOrdered}`);
+          const updateResult = await Product.updateOne(
+            { id: productId },
+            { $inc: { quantity: -quantityOrdered } }
+          );
+          console.log(`Update result for product ${productId}:`, updateResult);
+        } else {
+            console.log('Missing productId or quantityOrdered for item:', item);
+        }
+      }
+    }
+
     res.status(201).json(savedOrder);
   } catch (err) {
     res.status(400).json({ message: err.message });

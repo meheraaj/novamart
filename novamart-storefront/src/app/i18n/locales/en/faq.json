@@ -1,15 +1,14 @@
 {
-  "faq-one-title": "How to contact with Customer Service?",
-  "faq-one-content": "Our Customer Experience Team is available 7 days a week and we offer 2 ways to get in contact.Email and Chat . We try to reply quickly, so you need not to wait too long for a response!.",
-  "faq-two-title": "App installation failed, how to update system information?",
-  "faq-two-content": "Please read the documentation carefully . We also have some online video tutorials regarding this issue . If the problem remains, Please Open a ticket in the support forum",
-  "faq-three-title": "Website response taking time, how to improve?",
-  "faq-three-content": "At first, Please check your internet connection . We also have some online video tutorials regarding this issue . If the problem remains, Please Open a ticket in the support forum.",
-  "faq-four-title": "How do I create an account?",
-  "faq-four-content": "If you want to open an account for personal use you can do it over the phone or online. Opening an account online should only take a few minutes.",
-  "faq-five-title": "How to contact with Customer Service?",
-  "faq-five-content": "Our Customer Experience Team is available 7 days a week and we offer 2 ways to get in contact.Email and Chat . We try to reply quickly, so you need not to wait too long for a response!.",
-  "faq-six-title": "App installation failed, how to update system information?",
-  "faq-six-content": "Please read the documentation carefully . We also have some online video tutorials regarding this issue . If the problem remains, Please Open a ticket in the support forum",
-  "end": "end"
+  "faq-shipping-title": "How long will my delivery take?",
+  "faq-shipping-content": "We offer next-day delivery on most orders placed before 5 PM. Standard delivery typically takes 2-3 business days. You can track your order status in real-time through your ‘My Orders’ page.",
+  "faq-returns-title": "What is your return policy?",
+  "faq-returns-content": "We accept returns for non-perishable items within 7 days of delivery if they are unopened and in original condition. For fresh produce or perishable goods, please report any issues within 24 hours of delivery for a refund or replacement.",
+  "faq-payment-title": "What payment methods do you accept?",
+  "faq-payment-content": "We accept major credit/debit cards (Visa, MasterCard), digital wallets, and Cash on Delivery (COD) for your convenience.",
+  "faq-cancel-title": "Can I change or cancel my order?",
+  "faq-cancel-content": "You can modify or cancel your order up until it begins processing in our warehouse. Go to 'My Orders' and select the order you wish to change. If the order is already being packed, please contact customer support immediately.",
+  "faq-missing-title": "What if an item is missing or damaged?",
+  "faq-missing-content": "We apologize for the inconvenience! Please take a photo of the damaged item or note the missing product and contact our support team via the app or email at support@novamart.com. We will arrange a refund or replacement right away.",
+  "faq-account-title": "Do I need an account to shop?",
+  "faq-account-content": "You can browse our store as a guest, but you'll need to create an account to place an order. This allows us to save your delivery address and order history for a faster shopping experience next time."
 }
